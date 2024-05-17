@@ -1,0 +1,168 @@
+---
+title: Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region
+format:
+  html:
+    self-contained: true
+    embed-resources: true
+code-fold: true
+---
+
+**NetID: jf1633**
+
+**AFFILIATION: Georgetown University**
+
+
+# Introduction
+
+- The evolution of the natural environment as a whole can have a "one hair, one body" effect, and as climate change occurs, there is a chain reaction of natural geographic elements, and the vegetation, which is the most sensitive to climate change, will inevitably change accordingly.
+- In recent years, climate change has become a major global concern, affecting ecosystems, weather patterns and vegetation types. Understanding the relationship between climate variables and vegetation types is critical to predicting and mitigating the effects of climate change on ecosystems. Using past and current weather information from the National Oceanic and Atmospheric Administration (NOAA), we studied how climate conditions impact different types of plants in the Arizona, Colorado, New Mexico, and Utah regions throughout the year.
+- These areas where Arizona, Colorado, New Mexico, and Utah meet offer a special ecological setting with diverse plant life such as trees, grasses, bushes, and open ground. Changing topography and climatic conditions make it a place to study how temperature and precipitation changes affect vegetation, allowing for more in-depth analysis.
+
+# About the data
+
+Climate change using data from the [US Geological Survey (USGS)](https://www.usgs.gov/).
+
+More information can be found in the Wikipedia article for [Natural Bridges National Monument (NBNM)](https://en.wikipedia.org/wiki/Natural_Bridges_National_Monument).
+
+The original data from [this page](https://www.sciencebase.gov/catalog/item/61a6952fd34eb622f6978d9f).
+
+## Data loading and pre-processing
+
+```{python}
+import pandas as pd
+
+# Loading data
+historic_data = pd.read_csv('dataset/NABR_historic.csv')
+nearterm_data = pd.read_csv('dataset/nearterm_data_2020-2024.csv')
+
+# Merging data sets
+data = pd.concat([historic_data, nearterm_data], ignore_index=True)
+
+# Handling of missing values
+data.fillna(0, inplace=True)
+
+# Calculating additional features
+data['avg_temp'] = (data['T_Winter'] + data['T_Summer']) / 2
+data['total_precip'] = data['PPT_Winter'] + data['PPT_Summer']
+
+```
+
+# Analysis
+
+::: {.callout-tip}
+## Span of time
+Hist: 1980-2018
+
+NT: 2021-2024
+:::
+
+## Tree Canopy Coverage Over Time
+
+Changes in tree canopy cover over time have multiple implications, especially in ecology, climatology and environmental protection:
+
+1. Changes in canopy cover reflect the stability and health of ecosystems.
+2. Alterations in tree canopy coverage can serve as indicators of climate change effects.
+3. Changes in tree crown cover are also closely related to land use changes and human activities.
+
+
+```{python}
+#| fig-cap: "Figure 1: Tree Canopy Coverage Over Time"
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Setting the graphic style
+sns.set(style="whitegrid")
+
+# time series analysis
+plt.figure(figsize=(10, 6))
+sns.lineplot(data=data, x='year', y='treecanopy', hue='TimePeriod', marker='o')
+plt.title('Tree Canopy Coverage Over Time')
+plt.xlabel('Year')
+plt.ylabel('Tree Canopy Coverage (%)')
+plt.legend(title='Time Period')
+plt.show()
+```
+
+We can see from the graphs that HIST is more volatile, covering roughly between 8.8%-11.1% and spanning a wider time period from 1980-2018. NT, on the other hand, is less volatile, with coverage ranging roughly from 9.6%-9.8% and a smaller time span from 2021-2024.
+
+
+## Average Temperature vs Tree Canopy Coverage
+
+The correlation between average temperature and tree canopy coverage holds significant ecological and climatic implications:
+
+1. Tree canopy cover serves as a valuable indicator of climate change.
+2. Analyzing the interplay between mean temperature and canopy cover helps us comprehend how ecosystems respond to climate change.
+3. The relationship between average temperature and canopy cover also reflects ecosystem stability.
+
+```{python}
+#| fig-cap: "Figure 2: Average Temperature vs Tree Canopy Coverage"
+import plotly.express as px
+
+# Creating Interactive Scatterplots
+fig = px.scatter(data, x='avg_temp', y='treecanopy', color='TimePeriod',
+                 title='Average Temperature vs Tree Canopy Coverage')
+fig.show()
+```
+
+We can see from the graphs that Hist's average temperature will be a bit lower than NT's overall, but it's about the same overall, with NT's average temperature spanning a bit more.
+
+
+## Distribution of Tree Canopy and Herbaceous Plants Coverage
+
+The significance of canopy and herbaceous plant cover distribution includes the following aspects:
+
+1. Canopy and herbaceous plant cover distribution reflects the structure and function of ecosystems.
+2. The distribution of canopy and herbaceous plant cover has an important impact on biodiversity.
+3. The arrangement of canopy and herbaceous plant cover plays a pivotal role in safeguarding soil and managing water resources.
+
+```{python}
+#| fig-cap: "Figure 3: Distribution of Tree Canopy and Herbaceous Plants Coverage"
+# Creating Interactive Histograms
+fig = px.histogram(data, x='treecanopy', color='TimePeriod', nbins=30,
+                   title='Distribution of Tree Canopy Coverage',
+                   color_discrete_sequence=px.colors.qualitative.Set1)
+fig.show()
+
+fig = px.histogram(data, x='Herb', color='TimePeriod', nbins=30,
+                   title='Distribution of Herbaceous Plants Coverage',
+                   color_discrete_sequence=px.colors.qualitative.Set2)
+fig.show()
+
+```
+
+We can see from the graphs that whether it's Canopy or Herbaceous, Hist's coverage is much less than NT's.
+
+## Correlation Matrix
+
+Finally, we analyze the relationship between the variables to get a more direct idea of the correlation between the different variables. By looking at the color shades or the size of the numbers in the graph, you can quickly determine which variables are strongly positively, negatively or uncorrelated.
+
+```{python}
+#| fig-cap: "Figure 4: Correlation Matrix"
+plt.figure(figsize=(12, 10))
+correlation_matrix = data[['treecanopy', 'Ann_Herb', 'Bare', 'Herb', 'Litter', 'Shrub', 'avg_temp', 'total_precip']].corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix')
+plt.show()
+```
+
+Using the correlation matrix, we can see that the darker the color, the higher the correlation. The more red the color, the more positive the correlation; the more blue the color, the more negative the correlation.
+
+# Conclusions
+
+I examined the impact of various years on diverse vegetation types by utilizing climate data sourced from the National Oceanic and Atmospheric Administration (NOAA) for the four corners region. The analysis delves into how climatic factors like temperature and time of day correlate with vegetation measurements such as canopy and herbaceous cover. Additionally, I explored the interconnections among different variables to better understand their relationships.
+
+Insight 1: Tree canopy coverage varies significantly with average temperature across different seasons.
+
+Insight 2: There is a noticeable trend in the tree canopy coverage over the years, indicating potential climate impact.
+
+Recommendation: Implement a monitoring program to track changes in vegetation types and develop strategies to mitigate the negative impacts of climate change.
+
+# Reference
+
+Intergovernmental Panel on Climate Change (IPCC). (2014). Climate Change 2014: Impacts, Adaptation, and Vulnerability. Cambridge University Press.
+
+National Oceanic and Atmospheric Administration (NOAA). (n.d.). NOAA National Centers for Environmental Information (NCEI).
+
+Smith, M. D., Knapp, A. K., & Collins, S. L. (2009). A framework for assessing ecosystem dynamics in response to chronic resource alterations induced by global change. Ecology Letters, 12(8), 895-908.
+
+Millar, C. I., Stephenson, N. L., & Stephens, S. L. (2007). Climate change and forests of the future: Managing in the face of uncertainty. Ecological Applications, 17(8), 2145-2151. 

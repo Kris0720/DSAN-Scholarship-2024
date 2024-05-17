@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "Home.html",
+    "href": "Home.html",
+    "title": "Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region",
+    "section": "",
+    "text": "NetID: jf1633\nAFFILIATION: Georgetown University"
+  },
+  {
+    "objectID": "Home.html#data-loading-and-pre-processing",
+    "href": "Home.html#data-loading-and-pre-processing",
+    "title": "Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region",
+    "section": "Data loading and pre-processing",
+    "text": "Data loading and pre-processing\n\n\nCode\nimport pandas as pd\n\n# Loading data\nhistoric_data = pd.read_csv('dataset/NABR_historic.csv')\nnearterm_data = pd.read_csv('dataset/nearterm_data_2020-2024.csv')\n\n# Merging data sets\ndata = pd.concat([historic_data, nearterm_data], ignore_index=True)\n\n# Handling of missing values\ndata.fillna(0, inplace=True)\n\n# Calculating additional features\ndata['avg_temp'] = (data['T_Winter'] + data['T_Summer']) / 2\ndata['total_precip'] = data['PPT_Winter'] + data['PPT_Summer']"
+  },
+  {
+    "objectID": "Home.html#tree-canopy-coverage-over-time",
+    "href": "Home.html#tree-canopy-coverage-over-time",
+    "title": "Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region",
+    "section": "Tree Canopy Coverage Over Time",
+    "text": "Tree Canopy Coverage Over Time\nChanges in tree canopy cover over time have multiple implications, especially in ecology, climatology and environmental protection:\n\nChanges in canopy cover reflect the stability and health of ecosystems.\nAlterations in tree canopy coverage can serve as indicators of climate change effects.\nChanges in tree crown cover are also closely related to land use changes and human activities.\n\n\n\nCode\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Setting the graphic style\nsns.set(style=\"whitegrid\")\n\n# time series analysis\nplt.figure(figsize=(10, 6))\nsns.lineplot(data=data, x='year', y='treecanopy', hue='TimePeriod', marker='o')\nplt.title('Tree Canopy Coverage Over Time')\nplt.xlabel('Year')\nplt.ylabel('Tree Canopy Coverage (%)')\nplt.legend(title='Time Period')\nplt.show()\n\n\n\n\n\nFigure 1: Tree Canopy Coverage Over Time\n\n\n\n\nWe can see from the graphs that HIST is more volatile, covering roughly between 8.8%-11.1% and spanning a wider time period from 1980-2018. NT, on the other hand, is less volatile, with coverage ranging roughly from 9.6%-9.8% and a smaller time span from 2021-2024."
+  },
+  {
+    "objectID": "Home.html#average-temperature-vs-tree-canopy-coverage",
+    "href": "Home.html#average-temperature-vs-tree-canopy-coverage",
+    "title": "Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region",
+    "section": "Average Temperature vs Tree Canopy Coverage",
+    "text": "Average Temperature vs Tree Canopy Coverage\nThe correlation between average temperature and tree canopy coverage holds significant ecological and climatic implications:\n\nTree canopy cover serves as a valuable indicator of climate change.\nAnalyzing the interplay between mean temperature and canopy cover helps us comprehend how ecosystems respond to climate change.\nThe relationship between average temperature and canopy cover also reflects ecosystem stability.\n\n\n\nCode\nimport plotly.express as px\n\n# Creating Interactive Scatterplots\nfig = px.scatter(data, x='avg_temp', y='treecanopy', color='TimePeriod',\n                 title='Average Temperature vs Tree Canopy Coverage')\nfig.show()\n\n\n\n                                                \nFigure 2: Average Temperature vs Tree Canopy Coverage\n\n\nWe can see from the graphs that Hist’s average temperature will be a bit lower than NT’s overall, but it’s about the same overall, with NT’s average temperature spanning a bit more."
+  },
+  {
+    "objectID": "Home.html#distribution-of-tree-canopy-and-herbaceous-plants-coverage",
+    "href": "Home.html#distribution-of-tree-canopy-and-herbaceous-plants-coverage",
+    "title": "Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region",
+    "section": "Distribution of Tree Canopy and Herbaceous Plants Coverage",
+    "text": "Distribution of Tree Canopy and Herbaceous Plants Coverage\nThe significance of canopy and herbaceous plant cover distribution includes the following aspects:\n\nCanopy and herbaceous plant cover distribution reflects the structure and function of ecosystems.\nThe distribution of canopy and herbaceous plant cover has an important impact on biodiversity.\nThe arrangement of canopy and herbaceous plant cover plays a pivotal role in safeguarding soil and managing water resources.\n\n\n\nCode\n# Creating Interactive Histograms\nfig = px.histogram(data, x='treecanopy', color='TimePeriod', nbins=30,\n                   title='Distribution of Tree Canopy Coverage',\n                   color_discrete_sequence=px.colors.qualitative.Set1)\nfig.show()\n\nfig = px.histogram(data, x='Herb', color='TimePeriod', nbins=30,\n                   title='Distribution of Herbaceous Plants Coverage',\n                   color_discrete_sequence=px.colors.qualitative.Set2)\nfig.show()\n\n\n\n                                                \nFigure 3: Distribution of Tree Canopy and Herbaceous Plants Coverage\n\n\n\n                                                \n\n\nWe can see from the graphs that whether it’s Canopy or Herbaceous, Hist’s coverage is much less than NT’s."
+  },
+  {
+    "objectID": "Home.html#correlation-matrix",
+    "href": "Home.html#correlation-matrix",
+    "title": "Analyzing Climate Change Impact on Vegetation Dynamics in the Four Corners Region",
+    "section": "Correlation Matrix",
+    "text": "Correlation Matrix\nFinally, we analyze the relationship between the variables to get a more direct idea of the correlation between the different variables. By looking at the color shades or the size of the numbers in the graph, you can quickly determine which variables are strongly positively, negatively or uncorrelated.\n\n\nCode\nplt.figure(figsize=(12, 10))\ncorrelation_matrix = data[['treecanopy', 'Ann_Herb', 'Bare', 'Herb', 'Litter', 'Shrub', 'avg_temp', 'total_precip']].corr()\nsns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')\nplt.title('Correlation Matrix')\nplt.show()\n\n\n\n\n\nFigure 4: Correlation Matrix\n\n\n\n\nUsing the correlation matrix, we can see that the darker the color, the higher the correlation. The more red the color, the more positive the correlation; the more blue the color, the more negative the correlation."
+  }
+]

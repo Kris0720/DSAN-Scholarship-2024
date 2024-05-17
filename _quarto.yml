@@ -1,0 +1,20 @@
+project:
+  type: website
+
+website:
+  title: "DSAN Scholarship 2024"
+  navbar:
+    left:
+      - href: Home.html
+        text: Home
+
+
+
+format:
+  html:
+    theme: zephyr
+    css: styles.css
+    toc: true
+
+
+

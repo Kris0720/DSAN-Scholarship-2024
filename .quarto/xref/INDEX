@@ -1,0 +1,113 @@
+{
+  "index.qmd": {
+    "index.html": "8e01a352"
+  },
+  "about.qmd": {
+    "about.html": "028735f5"
+  },
+  "Decision Trees.qmd": {
+    "Decision Trees.html": "2e298764"
+  },
+  "Clustering.qmd": {
+    "Clustering.html": "ba44745d"
+  },
+  "Code.qmd": {
+    "Code.html": "91c49d97"
+  },
+  "Data Cleaning.qmd": {
+    "Data Cleaning.html": "6de4958a"
+  },
+  "Data Exploration.qmd": {
+    "Data Exploration.html": "e6c357b0"
+  },
+  "Data Gathering.qmd": {
+    "Data Gathering.html": "344bf24f"
+  },
+  "Data.qmd": {
+    "Data.html": "216aff4b"
+  },
+  "ARM.qmd": {
+    "ARM.html": "6dc3eda6"
+  },
+  "Conclusions.qmd": {
+    "Conclusions.html": "880c0d11"
+  },
+  "Dimensionality reduction.qmd": {
+    "Dimensionality reduction.html": "e199c86f"
+  },
+  "Introduction.qmd": {
+    "Introduction.html": "bec59411"
+  },
+  "Kris.qmd": {
+    "Kris.html": "e51a7911"
+  },
+  "Data_Gathering.qmd": {
+    "Data_Gathering.html": "adf0fbfe"
+  },
+  "Data_Cleaning.qmd": {
+    "Data_Cleaning.html": "7aabe793"
+  },
+  "Data_Exploration.qmd": {
+    "Data_Exploration.html": "35e7fde7"
+  },
+  "Decision_Trees.qmd": {
+    "Decision_Trees.html": "a99082f7"
+  },
+  "Dimensionality_reduction.qmd": {
+    "Dimensionality_reduction.html": "b6eb2db1"
+  },
+  "Introduction.ipynb": {
+    "Introduction.html": "d5b91ab6"
+  },
+  "ARM.ipynb": {
+    "ARM.html": "4e7c6335"
+  },
+  "Data_Gathering.ipynb": {
+    "Data_Gathering.html": "e8cc3a84"
+  },
+  "Data_Exploration.ipynb": {
+    "Data_Exploration.html": "9aedf440"
+  },
+  "Data_Cleaning.ipynb": {
+    "Data_Cleaning.html": "734a05e9"
+  },
+  "Code.ipynb": {
+    "Code.html": "a5c6c965"
+  },
+  "Conclusions.ipynb": {
+    "Conclusions.html": "ad097fa1"
+  },
+  "about.ipynb": {
+    "about.html": "b9b4f5ec"
+  },
+  "Dimensionality_reduction.ipynb": {
+    "Dimensionality_reduction.html": "c04735cd"
+  },
+  "Decision_Trees.ipynb": {
+    "Decision_Trees.html": "e691df65"
+  },
+  "Data.ipynb": {
+    "Data.html": "651237b2"
+  },
+  "index.ipynb": {
+    "index.html": "9c53152c"
+  },
+  "Kris.ipynb": {
+    "Kris.html": "94db4a52"
+  },
+  "Clustering.ipynb": {
+    "Clustering.html": "46a1dd02"
+  },
+  "Naive_Bayes copy.ipynb": {
+    "Naive_Bayes copy.html": "b9411378"
+  },
+  "Naive_Bayes.ipynb": {
+    "Naive_Bayes.html": "305aa770"
+  },
+  "data_EA.ipynb": {
+    "data_EA.html": "1b5795c3"
+  },
+  "Home.qmd": {
+    "Home.html": "9b95aaa6"
+  }
+}
