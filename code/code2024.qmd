@@ -1,0 +1,101 @@
+---
+format:
+  html:
+    self-contained: true
+    embed-resources: true
+---
+
+# Scholarship 2024
+
+## Data loading and pre-processing
+
+```{python}
+import pandas as pd
+
+# Loading data
+historic_data = pd.read_csv('dataset/NABR_historic.csv')
+nearterm_data = pd.read_csv('dataset/nearterm_data_2020-2024.csv')
+
+# Merging data sets
+data = pd.concat([historic_data, nearterm_data], ignore_index=True)
+
+# Handling of missing values
+data.fillna(0, inplace=True)
+
+# Calculating additional features
+data['avg_temp'] = (data['T_Winter'] + data['T_Summer']) / 2
+data['total_precip'] = data['PPT_Winter'] + data['PPT_Summer']
+
+```
+
+## Tree Canopy Coverage Over Time
+
+
+```{python}
+#| fig-cap: "Figure 1: Tree Canopy Coverage Over Time"
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Setting the graphic style
+sns.set(style="whitegrid")
+
+# time series analysis
+plt.figure(figsize=(10, 6))
+sns.lineplot(data=data, x='year', y='treecanopy', hue='TimePeriod', marker='o')
+plt.title('Tree Canopy Coverage Over Time')
+plt.xlabel('Year')
+plt.ylabel('Tree Canopy Coverage (%)')
+plt.legend(title='Time Period')
+plt.show()
+```
+
+We can see from the graphs that HIST is more volatile, covering roughly between 8.8%-11.1% and spanning a wider time period from 1980-2018. NT, on the other hand, is less volatile, with coverage ranging roughly from 9.6%-9.8% and a smaller time span from 2021-2024.
+
+
+## Average Temperature vs Tree Canopy Coverage
+
+```{python}
+#| fig-cap: "Figure 2: Average Temperature vs Tree Canopy Coverage"
+import plotly.express as px
+
+# Creating Interactive Scatterplots
+fig = px.scatter(data, x='avg_temp', y='treecanopy', color='TimePeriod',
+                 title='Average Temperature vs Tree Canopy Coverage')
+fig.show()
+```
+
+We can see from the graphs that Hist's average temperature will be a bit lower than NT's overall, but it's about the same overall, with NT's average temperature spanning a bit more.
+
+
+## Distribution of Tree Canopy and Herbaceous Plants Coverage
+
+```{python}
+#| fig-cap: "Figure 3: Distribution of Tree Canopy and Herbaceous Plants Coverage"
+# Creating Interactive Histograms
+fig = px.histogram(data, x='treecanopy', color='TimePeriod', nbins=30,
+                   title='Distribution of Tree Canopy Coverage',
+                   color_discrete_sequence=px.colors.qualitative.Set1)
+fig.show()
+
+fig = px.histogram(data, x='Herb', color='TimePeriod', nbins=30,
+                   title='Distribution of Herbaceous Plants Coverage',
+                   color_discrete_sequence=px.colors.qualitative.Set2)
+fig.show()
+
+```
+
+We can see from the graphs that whether it's Canopy or Herbaceous, Hist's coverage is much less than NT's.
+
+## Correlation Matrix
+
+
+```{python}
+#| fig-cap: "Figure 4: Correlation Matrix"
+plt.figure(figsize=(12, 10))
+correlation_matrix = data[['treecanopy', 'Ann_Herb', 'Bare', 'Herb', 'Litter', 'Shrub', 'avg_temp', 'total_precip']].corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix')
+plt.show()
+```
+
+Using the correlation matrix, we can see that the darker the color, the higher the correlation. The more red the color, the more positive the correlation; the more blue the color, the more negative the correlation.
